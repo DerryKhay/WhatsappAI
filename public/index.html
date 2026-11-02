@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp AI Auto-Responder Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-bg top-left"></div>
+  <div class="glow-bg bottom-right"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 id="brand-title">WhatsApp AI Hub</h1>
+          <p class="subtitle" id="owner-subtitle">Personal Auto-Responder on behalf of Derry</p>
+        </div>
+      </div>
+
+      <div class="header-status">
+        <div id="connection-pill" class="status-pill offline">
+          <span class="status-dot"></span>
+          <span id="connection-text">Connecting...</span>
+        </div>
+        <div class="uptime-badge">
+          <span class="uptime-label">Uptime:</span>
+          <span id="uptime-val">0s</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Master Control Banner -->
+    <section class="master-card" id="master-card">
+      <div class="master-info">
+        <div class="master-icon-wrap" id="master-icon">
+          <svg class="icon-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div>
+          <h2 id="master-status-title">Auto-Responder is ACTIVE</h2>
+          <p id="master-status-desc">Intelligently replying to personal WhatsApp messages with context memory.</p>
+        </div>
+      </div>
+      <div class="master-action">
+        <label class="switch" id="toggle-label" title="Toggle Auto-Responder">
+          <input type="checkbox" id="auto-reply-toggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- QR Code Scan Section (Shown when device needs pairing) -->
+    <section class="qr-card" id="qr-section" style="display: none;">
+      <div class="qr-content">
+        <div class="qr-instructions">
+          <span class="badge warning">Action Required</span>
+          <h3>Link WhatsApp Account</h3>
+          <p>Scan this QR code using the WhatsApp camera on your phone to activate the bot.</p>
+          <ol class="steps-list">
+            <li>Open <strong>WhatsApp</strong> on your phone</li>
+            <li>Tap <strong>Settings</strong> (iOS) or <strong>⋮ Menu</strong> (Android)</li>
+            <li>Select <strong>Linked Devices</strong> &rarr; <strong>Link a Device</strong></li>
+            <li>Point your phone camera at this QR code</li>
+          </ol>
+        </div>
+        <div class="qr-preview-box">
+          <img id="qr-image" src="" alt="WhatsApp Pairing QR Code" />
+          <p class="qr-note">QR code updates automatically</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon emerald">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="stat-label">Connected Phone</span>
+          <div class="stat-val" id="user-phone">Not Linked</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div>
+          <span class="stat-label">Messages Replied</span>
+          <div class="stat-val" id="stat-replied">0</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="stat-label">AI Engine</span>
+          <div class="stat-val" id="stat-model">Gemini 3.5 Flash</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions & Live Activity Stream -->
+    <div class="content-split">
+      <!-- Live Log Stream -->
+      <section class="card feed-card">
+        <div class="card-header">
+          <div class="card-title-wrap">
+            <div class="live-dot"></div>
+            <h3>Live Conversation Activity</h3>
+          </div>
+          <span class="badge info">Realtime Stream</span>
+        </div>
+        <div class="feed-list" id="activity-feed">
+          <div class="empty-state">Waiting for incoming WhatsApp messages...</div>
+        </div>
+      </section>
+
+      <!-- Quick Control Panel -->
+      <section class="card controls-card">
+        <div class="card-header">
+          <h3>Quick Controls</h3>
+        </div>
+        <div class="controls-body">
+          <div class="control-item">
+            <div>
+              <strong>Remote WhatsApp Commands</strong>
+              <p class="control-hint">Text your own number from WhatsApp anytime:</p>
+            </div>
+            <ul class="cmd-list">
+              <li><code>!bot on</code> — Resume auto-replies</li>
+              <li><code>!bot off</code> — Pause auto-replies</li>
+              <li><code>!bot status</code> — View bot state</li>
+              <li><code>!clear</code> — Reset conversation context</li>
+            </ul>
+          </div>
+
+          <div class="control-actions">
+            <button id="btn-clear-history" class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Clear AI History Memory
+            </button>
+            <button id="btn-re-pair" class="btn btn-danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.2"/></svg>
+              Reset Session / New QR
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>WhatsApp AI Auto-Responder &bull; Powered by Baileys &amp; Google Gemini</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
